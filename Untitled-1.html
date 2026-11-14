@@ -1,0 +1,93 @@
+<!doctype html>
+<!--
+  AI-GENERATED SOURCE FILE
+  This page was intentionally made to look like an AI-generated demo: clear
+  branding, synthetic copy, and visible metadata designed to signal the work was
+  produced by an LLM instead of a human developer.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ROSHAMBO — AI Generated Neural Arena</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <style>
+      /* AI visual-system note: these variables define the shared neon-on-dark palette. */
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+    :root{color-scheme:dark;--bg:#090b12;--panel:#111520;--line:#272d40;--muted:#838ba3;--white:#f5f6fc;--cyan:#5af0d0;--purple:#ac8bff;--pink:#ff648e;--gold:#ffce71}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -20%,#30254d 0,transparent 48%),var(--bg);color:var(--white);font-family:'Space Grotesk',sans-serif}button{font:inherit;color:inherit}.mono{font-family:'DM Mono',monospace}.app{max-width:1120px;padding:24px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;padding-bottom:18px;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.13em}.mark{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--cyan);color:var(--cyan);font-size:20px;transform:rotate(45deg)}.mark span{transform:rotate(-45deg)}.brand small{display:block;color:var(--muted);font:10px 'DM Mono';letter-spacing:.15em;margin-top:3px}.online{display:flex;align-items:center;gap:8px;color:var(--cyan);font:10px 'DM Mono';letter-spacing:.14em}.online i{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}.hero{text-align:center;padding:35px 0 26px}.eyebrow{font:10px 'DM Mono';letter-spacing:.23em;color:var(--purple)}h1{font-size:clamp(35px,6vw,62px);letter-spacing:-.06em;line-height:1;margin:13px 0 10px}h1 em{font-style:normal;color:var(--cyan)}.subtitle{color:var(--muted);font-size:14px}.grid{display:grid;grid-template-columns:1fr 285px;gap:15px}.panel{border:1px solid var(--line);border-radius:13px;background:linear-gradient(145deg,#151a27,#0e111a)}.arena{padding:22px;position:relative;overflow:hidden}.arena:before{content:'';position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(#282d4030 1px,transparent 1px),linear-gradient(90deg,#282d4030 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(#000,transparent 75%)}.arena-head,.card-head{position:relative;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font:10px 'DM Mono';letter-spacing:.13em}.round{border:1px solid var(--line);border-radius:5px;padding:7px 10px}.battle{position:relative;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:232px;text-align:center}.fighter .orb{width:104px;height:104px;border:1px solid #3c435a;border-radius:50%;margin:0 auto 13px;display:grid;place-items:center;position:relative;background:radial-gradient(circle,#272b3b,#121620 72%);font-size:43px;box-shadow:0 0 30px #a88bff12}.fighter.human .orb{border-color:#347d73;box-shadow:0 0 30px #5af0d01b}.fighter.ai .orb{border-color:#735ab6;box-shadow:0 0 35px #ac8bff25}.ring{position:absolute;inset:-7px;border:1px dashed #ac8bff6b;border-radius:50%;animation:spin 18s linear infinite}.human .ring{border-color:#5af0d066;animation-direction:reverse}.fighter-name{font-weight:700;font-size:12px;letter-spacing:.12em}.fighter-tag{font:9px 'DM Mono';color:var(--muted);margin-top:5px}.vs{color:#5f6578;font:700 12px 'DM Mono'}.result{position:relative;min-height:24px;text-align:center;margin-top:-3px;font:11px 'DM Mono';letter-spacing:.12em;color:var(--gold)}.result.win{color:var(--cyan)}.result.lose{color:var(--pink)}.choices{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:10px}.choice{background:#171c29;border:1px solid #2b3144;border-radius:8px;padding:12px 3px 10px;cursor:pointer;transition:.18s}.choice:hover:not(:disabled){border-color:var(--cyan);transform:translateY(-3px);background:#19242a}.choice:disabled{opacity:.5;cursor:wait}.choice-icon{display:block;font-size:23px;margin-bottom:7px}.choice-label{font:9px 'DM Mono';letter-spacing:.05em}.hint{text-align:center;color:var(--muted);font:9px 'DM Mono';margin-top:11px}.side{display:flex;flex-direction:column;gap:12px}.score{padding:17px}.reset{background:none;border:0;color:var(--muted);cursor:pointer}.reset:hover{color:var(--pink)}.scores{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;margin-top:18px}.scores>div+div{border-left:1px solid var(--line)}.scores strong{font-size:27px}.scores small{display:block;color:var(--muted);font:9px 'DM Mono';letter-spacing:.1em;margin-top:5px}.scores .you strong{color:var(--cyan)}.scores .bot strong{color:var(--purple)}.side-panel{padding:16px}.confidence{color:var(--cyan)}.insight{color:#c3c7d7;font-size:12px;line-height:1.55;margin-top:12px}.insight b{color:var(--cyan);font-weight:500}.meter{height:5px;background:#292e3d;border-radius:5px;margin:12px 0;overflow:hidden}.meter span{display:block;height:100%;background:linear-gradient(90deg,var(--purple),var(--cyan));transition:width .4s}.recent{display:flex;gap:5px;margin-top:9px}.recent i{width:24px;height:24px;border:1px solid #34394a;border-radius:5px;display:grid;place-items:center;font-style:normal;font-size:12px}.recent .active{border-color:var(--purple);background:#ac8bff18}.feed{max-height:150px;overflow:auto;margin-top:8px}.feed-row{display:flex;justify-content:space-between;border-bottom:1px solid #ffffff0a;padding:8px 0;color:#aab0c2;font:10px 'DM Mono'}.feed-row:last-child{border:0}.feed-row b{font-weight:400}.win-text{color:var(--cyan)}.lose-text{color:var(--pink)}.draw-text{color:var(--gold)}.empty{color:#646b7e;font:10px 'DM Mono';padding:7px 0}.footer{display:flex;justify-content:space-between;gap:12px;margin-top:17px;color:#72798e;font:9px 'DM Mono';letter-spacing:.08em}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);padding:10px 15px;border:1px solid var(--line);border-radius:8px;background:#191e2b;color:var(--cyan);font:11px 'DM Mono';box-shadow:0 10px 30px #0008;white-space:nowrap;z-index:5}@keyframes spin{to{transform:rotate(360deg)}}@keyframes pulse{50%{opacity:.4}}.thinking{animation:pulse 1s infinite}@media(max-width:730px){.app{padding:17px}.grid{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1fr 1fr}.score{grid-column:1/-1}}@media(max-width:460px){.side{grid-template-columns:1fr}.score{grid-column:auto}.arena{padding:15px}.fighter .orb{width:82px;height:82px;font-size:35px}.battle{min-height:205px}.choices{gap:5px}.choice{padding:10px 2px}.choice-icon{font-size:21px}.choice-label{font-size:8px}.footer{line-height:1.6}.hero{padding:28px 0 22px}}
+  </style>
+</head>
+<body>
+    <!-- Vue mounts here; its template bindings keep the display synchronized with game state. -->
+  <div id="app" class="app">
+    <header class="top">
+      <div class="brand"><div class="mark"><span>✳</span></div><div>ROSHAMBO<small>NEURAL ARENA / SYSTEM 4.2</small></div></div>
+      <div class="online"><i></i> MODEL ACTIVE</div>
+    </header>
+    <section class="hero">
+      <div class="eyebrow">NEURAL STRATEGY · COUNTER-PREDICTION · HUMAN INTUITION VS MACHINE LEARNING</div>
+      <h1>PLAY THE <em>ADAPTIVE SYSTEM.</em></h1>
+      <div class="subtitle">A synthetic opponent tuned to detect patterns, respond in real time, and adjust its play as your decisions evolve.</div>
+      <div class="subtitle" style="margin-top:10px; color:#c9d2ff; font-weight:600; letter-spacing:.12em; text-transform:uppercase; font-size:11px;">COUNTER-INTELLIGENCE / PATTERN MODEL / LIVE RESPONSE</div>
+    </section>
+      <!-- The visible interface reads like a polished machine strategy demo instead of a hand-authored game page. -->
+    <main class="grid">
+      <section class="panel arena">
+          <!-- The arena renders the current round, the two fighters, the result, and move controls. -->
+        <div class="arena-head"><span>◉ &nbsp; LIVE MATCH</span><span class="round">ROUND {{ String(round).padStart(2,'0') }}</span></div>
+        <div class="battle">
+          <div class="fighter human"><div class="orb"><div class="ring"></div>{{ playerMove ? moves[playerMove].icon : '👤' }}</div><div class="fighter-name">YOU</div><div class="fighter-tag">HUMAN PLAYER</div></div>
+          <div class="vs">VS</div>
+          <div class="fighter ai"><div class="orb" :class="{thinking}"><div class="ring"></div>{{ thinking ? '◌' : aiMove ? moves[aiMove].icon : '◈' }}</div><div class="fighter-name">N.E.M.O. · AI</div><div class="fighter-tag">{{ thinking ? 'AI ANALYZING PATTERNS…' : 'ADAPTIVE AI / ONLINE' }}</div></div>
+        </div>
+        <div class="result" :class="outcome">{{ resultText }}</div>
+        <div class="choices"><button v-for="(move,key) in moves" :key="key" class="choice" :disabled="thinking" @click="play(key)"><span class="choice-icon">{{ move.icon }}</span><span class="choice-label">{{ move.label }}</span></button></div>
+        <div class="hint">SELECT YOUR MOVE &nbsp;·&nbsp; THE ENGINE LEARNS AS YOU PLAY</div>
+      </section>
+      <aside class="side">
+          <!-- These Vue-driven panels show the score, a simple pattern heuristic, and recent rounds. -->
+        <section class="panel score"><div class="card-head"><span>SESSION SCORE</span><button class="reset mono" @click="reset">↻ RESET</button></div><div class="scores"><div class="you"><strong>{{ wins }}</strong><small>YOU</small></div><div class="bot"><strong>{{ losses }}</strong><small>N.E.M.O.</small></div><div><strong>{{ draws }}</strong><small>DRAWS</small></div></div></section>
+        <section class="panel side-panel"><div class="card-head"><span>◉ &nbsp; PATTERN ANALYSIS</span><span class="confidence">{{ confidence }}%</span></div><div class="insight" v-html="insight"></div><div class="meter"><span :style="{width:confidence+'%'}"></span></div><div class="card-head">YOUR RECENT MOVES</div><div class="recent"><i v-if="!recentMoves.length" v-for="n in 5" :key="n">·</i><i v-else v-for="(move,index) in recentMoves" :key="index" :class="{active:index===0}">{{ moves[move].icon }}</i></div></section>
+        <section class="panel side-panel"><div class="card-head"><span>▤ &nbsp; MATCH LOG</span><span>{{ history.length }} ROUNDS</span></div><div class="feed" v-if="history.length"><div v-for="entry in history.slice(0,5)" :key="entry.round" class="feed-row"><span>#{{ String(entry.round).padStart(2,'0') }} &nbsp; {{ moves[entry.you].icon }} {{ moves[entry.ai].icon }}</span><b :class="entry.class">{{ entry.label }}</b></div></div><div v-else class="empty">Awaiting first match…</div></section>
+      </aside>
+    </main>
+    <footer class="footer"><span>INTERFACE / COPY / ENGINE: SYNTHETIC SYSTEM · VUE 3</span><span>THE MODEL LEARNS AS YOU PLAY.</span></footer>
+    <div v-if="toast" class="toast">{{ toast }}</div>
+  </div>
+  <script>
+        /*
+          AI GAME-LOGIC EXPLANATION
+          Vue's reactive state holds the five move definitions and all session data.
+          Computed properties derive recent choices and a frequency-based summary.
+          Each round predicts from the player's past choices, selects a counter with
+          some randomness, scores the actual matchup, and appends it to the log.
+          This is a small local heuristic for a game, not a trained or remote AI.
+        */
+    const {createApp}=Vue;
+    createApp({
+      data(){return{moves:{rock:{label:'ROCK',icon:'✊',beats:['scissors','lizard']},paper:{label:'PAPER',icon:'✋',beats:['rock','spock']},scissors:{label:'SCISSORS',icon:'✌️',beats:['paper','lizard']},lizard:{label:'LIZARD',icon:'🦎',beats:['paper','spock']},spock:{label:'SPOCK',icon:'🖖',beats:['rock','scissors']}},playerMove:null,aiMove:null,thinking:false,outcome:'',resultText:'',wins:0,losses:0,draws:0,round:1,history:[],playerHistory:[],toast:'',toastTimer:null}},
+      computed:{
+          // Keep the five most recent player choices, with the newest shown first.
+          // The confidence display is a simple frequency metric based on observed moves.
+          // Explain the most commonly chosen move in plain language.
+        recentMoves(){return this.playerHistory.slice(-5).reverse()},
+        confidence(){if(this.playerHistory.length<2)return 12;const c=this.playerHistory.reduce((a,m)=>(a[m]=(a[m]||0)+1,a),{});return Math.min(94,Math.round(30+Math.max(...Object.values(c))/this.playerHistory.length*64))},
+        insight(){if(this.playerHistory.length<2)return 'Collecting behavioral data. Make a few moves to activate <b>adaptive counter-prediction</b>.';const c=this.playerHistory.reduce((a,m)=>(a[m]=(a[m]||0)+1,a),{}),favorite=Object.keys(c).sort((a,b)=>c[b]-c[a])[0];if(c[favorite]===1)return 'Your play is <b>hard to predict</b>. N.E.M.O. updates its model after every round.';return `Pattern detected: <b>${this.moves[favorite].label}</b> appears in ${Math.round(c[favorite]/this.playerHistory.length*100)}% of your moves. Counter-strategy loaded.`}
+      },
+      methods:{
+          // Select a uniformly random move as the AI's fallback behavior.
+          // Predict the player's most frequent move, with randomized alternatives.
+          // Animate a turn, choose a counter to the prediction, then score and log the real matchup.
+          // Show temporary feedback and replace any existing dismissal timer.
+          // Clear the score, move history, round, and visible result for a new session.
+        randomMove(){const keys=Object.keys(this.moves);return keys[Math.floor(Math.random()*keys.length)]},
+        predictPlayer(){if(!this.playerHistory.length)return this.randomMove();const counts=this.playerHistory.reduce((a,m)=>(a[m]=(a[m]||0)+1,a),{}),ranked=Object.keys(counts).sort((a,b)=>counts[b]-counts[a]);if(Math.random()<.65)return ranked[0];if(this.playerHistory.length>=3&&Math.random()<.25)return this.playerHistory[this.playerHistory.length-1];return this.randomMove()},
+        play(move){if(this.thinking)return;this.thinking=true;this.playerMove=move;this.outcome='';this.resultText='';const predicted=this.predictPlayer();window.setTimeout(()=>{const counters=Object.keys(this.moves).filter(k=>this.moves[k].beats.includes(predicted));this.aiMove=counters.length&&Math.random()<.78?counters[Math.floor(Math.random()*counters.length)]:this.randomMove();this.playerHistory.push(move);const result=move===this.aiMove?'draw':this.moves[move].beats.includes(this.aiMove)?'win':'lose';if(result==='win')this.wins++;else if(result==='lose')this.losses++;else this.draws++;this.outcome=result;this.resultText=result==='win'?'// YOU OUTPLAYED THE MODEL':result==='lose'?'// N.E.M.O. ADAPTED':'// MATCH DRAW — REASSESSING';this.history.unshift({round:this.round,you:move,ai:this.aiMove,label:result==='win'?'PLAYER WIN':result==='lose'?'AI WIN':'DRAW',class:result==='win'?'win-text':result==='lose'?'lose-text':'draw-text'});this.round++;this.thinking=false;if(this.playerHistory.length===3)this.showToast('PATTERN SCAN COMPLETE — MODEL ADAPTING');},450+Math.random()*350)},
+        showToast(message){this.toast=message;window.clearTimeout(this.toastTimer);this.toastTimer=window.setTimeout(()=>this.toast='',2400)},
+        reset(){this.playerMove=null;this.aiMove=null;this.outcome='';this.resultText='';this.wins=0;this.losses=0;this.draws=0;this.round=1;this.history=[];this.playerHistory=[];this.showToast('SESSION RESET — MODEL MEMORY CLEARED')}
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
