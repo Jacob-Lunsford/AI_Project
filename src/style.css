@@ -9,6 +9,8 @@
   --purple: #ac8bff;
   --pink: #ff648e;
   --gold: #ffce71;
+  --accent-soft: #5af0d022;
+  --accent-glow: #5af0d02b;
 }
 
 * {
@@ -42,6 +44,31 @@ button {
   max-width: 1120px;
   padding: 24px;
   margin: auto;
+}
+
+.app.theme-violet {
+  --cyan: #a89cff;
+  --purple: #ff74d4;
+  --pink: #ff789c;
+  --gold: #ffd77d;
+  --accent-soft: #a89cff22;
+  --accent-glow: #a89cff2b;
+}
+
+.app.theme-gold {
+  --cyan: #ffd071;
+  --purple: #71b9ff;
+  --pink: #ff719e;
+  --gold: #ffb95e;
+  --accent-soft: #ffd07122;
+  --accent-glow: #ffd0712b;
+}
+
+.app.no-motion *,
+.app.no-motion *::before,
+.app.no-motion *::after {
+  animation: none !important;
+  transition: none !important;
 }
 
 .top {
@@ -178,6 +205,7 @@ h1 em {
   padding: 22px;
   position: relative;
   overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .arena:before {
@@ -188,6 +216,21 @@ h1 em {
   background-image: linear-gradient(#282d4030 1px, transparent 1px), linear-gradient(90deg, #282d4030 1px, transparent 1px);
   background-size: 34px 34px;
   mask-image: linear-gradient(#000, transparent 75%);
+}
+
+.arena.round-win {
+  border-color: var(--cyan);
+  box-shadow: 0 0 30px var(--accent-glow);
+}
+
+.arena.round-lose {
+  border-color: var(--pink);
+  box-shadow: 0 0 26px #ff648e26;
+}
+
+.arena.round-draw {
+  border-color: var(--gold);
+  box-shadow: 0 0 22px #ffce7120;
 }
 
 .arena-head,
@@ -286,6 +329,87 @@ h1 em {
 
 .result.lose {
   color: var(--pink);
+}
+
+.orb.winner {
+  border-color: var(--cyan) !important;
+  box-shadow: 0 0 34px var(--accent-glow);
+  animation: winner-pulse 0.8s ease-in-out 2;
+}
+
+.ai .orb.winner {
+  border-color: var(--pink) !important;
+  box-shadow: 0 0 34px #ff648e35;
+}
+
+.match-progress {
+  position: relative;
+  max-width: 430px;
+  margin: 0 auto 15px;
+  padding: 10px 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #10141fdd;
+}
+
+.match-progress-head,
+.match-progress-scores > div > span {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font: 8px 'DM Mono';
+  letter-spacing: 0.08em;
+}
+
+.match-progress-head {
+  margin-bottom: 8px;
+}
+
+.match-progress-scores {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.match-progress-scores > div > span {
+  margin-bottom: 5px;
+}
+
+.match-progress-scores b {
+  color: var(--white);
+}
+
+.mini-meter {
+  height: 4px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #292e3d;
+}
+
+.mini-meter i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.35s;
+}
+
+.player-meter {
+  background: var(--cyan);
+}
+
+.ai-meter {
+  background: var(--purple);
+}
+
+.endless-progress {
+  color: var(--muted);
+  font: 8px 'DM Mono';
+  letter-spacing: 0.12em;
+  text-align: center;
+}
+
+.endless-progress span {
+  color: var(--cyan);
 }
 
 .choices {
@@ -665,9 +789,152 @@ h1 em {
   outline: none;
 }
 
+.settings-modal {
+  width: min(540px, 100%);
+}
+
+.setting-group {
+  margin: 20px 0;
+}
+
+.setting-label {
+  display: block;
+  color: var(--muted);
+  font: 9px 'DM Mono';
+  letter-spacing: 0.12em;
+}
+
+.theme-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 9px;
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #171c29;
+  color: #c3c7d7;
+  cursor: pointer;
+  font: 8px 'DM Mono';
+  letter-spacing: 0.04em;
+  text-align: left;
+}
+
+.theme-option.selected {
+  border-color: var(--cyan);
+  color: var(--white);
+  box-shadow: inset 0 0 14px var(--accent-soft);
+}
+
+.theme-option i {
+  width: 10px;
+  height: 10px;
+  flex: 0 0 10px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.theme-option.theme-violet i {
+  background: #a89cff;
+  box-shadow: 0 0 10px #a89cff80;
+}
+
+.theme-option.theme-gold i {
+  background: #ffd071;
+  box-shadow: 0 0 10px #ffd07180;
+}
+
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 0;
+  border-top: 1px solid var(--line);
+}
+
+.setting-description {
+  display: block;
+  max-width: 290px;
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.setting-select {
+  min-height: 38px;
+  padding: 0 9px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #171c29;
+  color: var(--cyan);
+  font-size: 9px;
+}
+
+.setting-select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 9px;
+  min-width: 76px;
+  min-height: 36px;
+  padding: 5px 7px 5px 11px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #171c29;
+  color: var(--muted);
+  cursor: pointer;
+  font: 9px 'DM Mono';
+}
+
+.toggle i {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #656b7e;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.toggle.enabled {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+.toggle.enabled i {
+  background: var(--cyan);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.settings-note {
+  margin: 9px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes winner-pulse {
+  50% {
+    transform: scale(1.06);
   }
 }
 
@@ -702,7 +969,9 @@ h1 em {
 
 @media (max-width: 460px) {
   .top-actions {
-    gap: 7px;
+    align-items: flex-end;
+    flex-direction: column;
+    gap: 6px;
   }
 
   .online {
@@ -710,7 +979,9 @@ h1 em {
   }
 
   .instructions-button {
-    min-width: 38px;
+    min-height: 34px;
+    padding: 6px 8px;
+    font-size: 8px;
   }
 
   .rules-grid {
@@ -719,6 +990,20 @@ h1 em {
 
   .instructions-modal {
     padding: 18px;
+  }
+
+  .theme-options {
+    grid-template-columns: 1fr;
+  }
+
+  .setting-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .setting-select,
+  .motion-setting .toggle {
+    width: 100%;
   }
 
   .side {

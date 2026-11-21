@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div class="app" :class="['theme-' + theme, { 'no-motion': !animationsEnabled }]">
     <header class="top">
       <div class="brand">
         <div class="mark"><span>✳</span></div>
@@ -9,6 +9,9 @@
         </div>
       </div>
       <div class="top-actions">
+        <button class="instructions-button mono" type="button" @click="settingsOpen = true">
+          ⚙ &nbsp; SETTINGS
+        </button>
         <button class="instructions-button mono" type="button" @click="instructionsOpen = true">
           ? &nbsp; INSTRUCTIONS
         </button>
@@ -26,7 +29,7 @@
     </section>
 
     <main class="grid">
-      <section class="panel arena">
+      <section class="panel arena" :class="'round-' + outcome">
         <div class="arena-head">
           <span>◉ &nbsp; LIVE MATCH</span>
           <span class="round">ROUND {{ String(round).padStart(2, '0') }}</span>
@@ -34,7 +37,7 @@
 
         <div class="battle">
           <div class="fighter human">
-            <div class="orb">
+            <div class="orb" :class="{ winner: outcome === 'win' }">
               <div class="ring"></div>
               {{ playerMove !== null ? moves[playerMove].icon : '◈' }}
             </div>
@@ -45,23 +48,43 @@
           <div class="vs">VS</div>
 
           <div class="fighter ai">
-            <div class="orb" :class="{ thinking }">
+            <div class="orb" :class="{ thinking, winner: outcome === 'lose' }">
               <div class="ring"></div>
               {{ thinking ? '◌' : aiMove !== null ? moves[aiMove].icon : '◈' }}
             </div>
             <div class="fighter-name">N.E.M.O. · AI</div>
-            <div class="fighter-tag">{{ thinking ? 'AI ANALYZING PATTERNS…' : 'ADAPTIVE MODEL / ONLINE' }}</div>
+            <div class="fighter-tag">{{ matchComplete ? 'MATCH COMPLETE / NEXT MATCH INCOMING' : thinking ? 'AI ANALYZING PATTERNS…' : 'ADAPTIVE MODEL / ONLINE' }}</div>
           </div>
         </div>
 
         <div class="result" :class="outcome">{{ resultText }}</div>
+
+        <div class="match-progress" v-if="matchFormat !== 'endless'">
+          <div class="match-progress-head">
+            <span>MATCH {{ matchNumber }} / BEST OF {{ matchFormat }}</span>
+            <span>FIRST TO {{ matchTarget }}</span>
+          </div>
+          <div class="match-progress-scores">
+            <div>
+              <span>YOU <b>{{ matchWins }}</b></span>
+              <div class="mini-meter"><i class="player-meter" :style="{ width: (matchWins / matchTarget) * 100 + '%' }"></i></div>
+            </div>
+            <div>
+              <span>N.E.M.O. <b>{{ matchLosses }}</b></span>
+              <div class="mini-meter"><i class="ai-meter" :style="{ width: (matchLosses / matchTarget) * 100 + '%' }"></i></div>
+            </div>
+          </div>
+        </div>
+        <div v-else class="match-progress endless-progress">
+          ENDLESS MODE <span>·</span> PLAY AS LONG AS YOU LIKE
+        </div>
 
         <div class="choices">
           <button
             v-for="(move, key) in moves"
             :key="key"
             class="choice"
-            :disabled="thinking"
+            :disabled="thinking || matchComplete"
             @click="play(key)"
           >
             <span class="choice-icon">{{ move.icon }}</span>
@@ -164,7 +187,7 @@
           </button>
         </div>
 
-        <p>Select one of the five moves. N.E.M.O. analyzes and counters your play after a short delay.</p>
+        <p>Select one of the five moves. N.E.M.O. analyzes and counters your play after a short delay. Choose a best-of match in Settings, or play in Endless mode.</p>
 
         <div class="rules-grid">
           <div><strong>ROCK ✊</strong><span>beats Scissors, Lizard</span></div>
@@ -177,12 +200,101 @@
         <div class="instructions-stats">
           <p><strong>Winning:</strong> Choose a move that beats N.E.M.O.'s move.</p>
           <p><strong>Drawing:</strong> Matching moves are draws.</p>
+          <p><strong>Best of:</strong> First to a majority of wins clinches the match. Draws do not count toward the match target.</p>
           <p><strong>Total Games:</strong> Wins, losses, and draws combined.</p>
           <p><strong>Win %:</strong> Wins divided by total games. Draws count in the denominator.</p>
         </div>
 
         <button class="instructions-start mono" type="button" @click="instructionsOpen = false">
           START PLAYING
+        </button>
+      </section>
+    </div>
+
+    <div
+      v-if="settingsOpen"
+      class="instructions-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="settings-title"
+      @click.self="settingsOpen = false"
+      @keydown.escape="settingsOpen = false"
+    >
+      <section class="instructions-modal settings-modal">
+        <div class="instructions-head">
+          <div>
+            <small>ROSHAMBO / CONFIGURATION</small>
+            <h2 id="settings-title">ARENA SETTINGS</h2>
+          </div>
+          <button
+            class="instructions-close mono"
+            type="button"
+            aria-label="Close settings"
+            @click="settingsOpen = false"
+          >
+            ×
+          </button>
+        </div>
+
+        <div class="setting-group">
+          <label class="setting-label">ARENA COLOR SYSTEM</label>
+          <div class="theme-options">
+            <button
+              v-for="option in themes"
+              :key="option.value"
+              class="theme-option"
+              :class="['theme-' + option.value, { selected: theme === option.value }]"
+              type="button"
+              :aria-pressed="theme === option.value"
+              @click="theme = option.value"
+            >
+              <i></i>
+              <span>{{ option.label }}</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <label class="setting-label" for="match-format">MATCH FORMAT</label>
+            <small class="setting-description">A clinched match starts the next one automatically. Session totals stay intact.</small>
+          </div>
+          <select
+            id="match-format"
+            class="setting-select mono"
+            :value="matchFormat"
+            :disabled="thinking || matchComplete"
+            @change="changeMatchFormat($event.target.value)"
+          >
+            <option value="3">BEST OF 3</option>
+            <option value="5">BEST OF 5</option>
+            <option value="7">BEST OF 7</option>
+            <option value="endless">ENDLESS</option>
+          </select>
+        </div>
+
+        <div class="setting-row motion-setting">
+          <div>
+            <label class="setting-label" for="motion-toggle">ARENA ANIMATIONS</label>
+            <small class="setting-description">Toggle the spinning rings, transitions, and result effects.</small>
+          </div>
+          <button
+            id="motion-toggle"
+            class="toggle"
+            :class="{ enabled: animationsEnabled }"
+            type="button"
+            role="switch"
+            :aria-checked="animationsEnabled"
+            @click="animationsEnabled = !animationsEnabled"
+          >
+            <span>{{ animationsEnabled ? 'ON' : 'OFF' }}</span>
+            <i></i>
+          </button>
+        </div>
+
+        <p class="settings-note">Settings apply immediately. Changing match format resets only the current match score.</p>
+        <button class="instructions-start mono" type="button" @click="settingsOpen = false">
+          APPLY &amp; RETURN TO ARENA
         </button>
       </section>
     </div>
@@ -202,6 +314,19 @@ export default {
         lizard: { label: 'LIZARD', icon: '🦎', beats: ['paper', 'spock'] },
         spock: { label: 'SPOCK', icon: '🖖', beats: ['rock', 'scissors'] },
       },
+      themes: [
+        { value: 'cyan', label: 'CYAN CORE' },
+        { value: 'violet', label: 'VIOLET NEBULA' },
+        { value: 'gold', label: 'SOLAR GOLD' },
+      ],
+      theme: 'cyan',
+      animationsEnabled: true,
+      matchFormat: '3',
+      matchNumber: 1,
+      matchWins: 0,
+      matchLosses: 0,
+      matchComplete: false,
+      matchTimer: null,
       playerMove: null,
       aiMove: null,
       thinking: false,
@@ -217,9 +342,13 @@ export default {
       toast: '',
       toastTimer: null,
       instructionsOpen: false,
+      settingsOpen: false,
     }
   },
   computed: {
+    matchTarget() {
+      return this.matchFormat === 'endless' ? null : Math.ceil(Number(this.matchFormat) / 2)
+    },
     winPercentage() {
       if (this.totalGames === 0) return 0
       return Math.round((this.wins / this.totalGames) * 100)
@@ -255,6 +384,20 @@ export default {
     },
   },
   methods: {
+    changeMatchFormat(format) {
+      this.matchFormat = format
+      this.matchWins = 0
+      this.matchLosses = 0
+      this.matchNumber = 1
+      this.matchComplete = false
+      if (this.matchTimer) window.clearTimeout(this.matchTimer)
+      this.matchTimer = null
+      this.outcome = ''
+      this.resultText = ''
+      this.playerMove = null
+      this.aiMove = null
+      this.showToast(`MATCH FORMAT UPDATED — ${format === 'endless' ? 'ENDLESS' : `BEST OF ${format}`}`)
+    },
     randomMove() {
       const keys = Object.keys(this.moves)
       return keys[Math.floor(Math.random() * keys.length)]
@@ -309,6 +452,8 @@ export default {
         else if (result === 'lose') this.losses++
         else this.draws++
         this.totalGames++
+        if (result === 'win') this.matchWins++
+        else if (result === 'lose') this.matchLosses++
 
         this.outcome = result
         this.resultText = result === 'win'
@@ -328,6 +473,26 @@ export default {
         this.round++
         this.thinking = false
 
+        if (this.matchTarget && (this.matchWins >= this.matchTarget || this.matchLosses >= this.matchTarget)) {
+          const playerWon = this.matchWins >= this.matchTarget
+          this.matchComplete = true
+          this.resultText = playerWon
+            ? `// YOU WIN — BEST OF ${this.matchFormat}`
+            : `// N.E.M.O. WINS — BEST OF ${this.matchFormat}`
+          this.matchTimer = window.setTimeout(() => {
+            this.matchNumber++
+            this.matchWins = 0
+            this.matchLosses = 0
+            this.matchComplete = false
+            this.playerMove = null
+            this.aiMove = null
+            this.outcome = ''
+            this.resultText = ''
+            this.matchTimer = null
+            this.showToast(`MATCH ${this.matchNumber} STARTED`)
+          }, 2400)
+        }
+
         if (this.playerHistory.length === 3) {
           this.showToast('PATTERN SCAN COMPLETE — MODEL ADAPTING')
         }
@@ -342,11 +507,21 @@ export default {
       this.losses = 0
       this.draws = 0
       this.totalGames = 0
+      this.matchNumber = 1
+      this.matchWins = 0
+      this.matchLosses = 0
+      this.matchComplete = false
+      if (this.matchTimer) window.clearTimeout(this.matchTimer)
+      this.matchTimer = null
       this.round = 1
       this.history = []
       this.playerHistory = []
       this.showToast('SESSION RESET — MODEL MEMORY CLEARED')
     },
+  },
+  beforeUnmount() {
+    if (this.matchTimer) window.clearTimeout(this.matchTimer)
+    if (this.toastTimer) window.clearTimeout(this.toastTimer)
   },
 }
 </script>
