@@ -8,7 +8,12 @@
           <small>NEURAL ARENA / SYSTEM 4.2</small>
         </div>
       </div>
-      <div class="online"><i></i> MODEL ACTIVE</div>
+      <div class="top-actions">
+        <button class="instructions-button mono" type="button" @click="instructionsOpen = true">
+          ? &nbsp; INSTRUCTIONS
+        </button>
+        <div class="online"><i></i> MODEL ACTIVE</div>
+      </div>
     </header>
 
     <section class="hero">
@@ -87,6 +92,16 @@
               <small>DRAWS</small>
             </div>
           </div>
+          <div class="match-statistics">
+            <div>
+              <strong>{{ totalGames }}</strong>
+              <small>TOTAL GAMES</small>
+            </div>
+            <div>
+              <strong>{{ winPercentage }}%</strong>
+              <small>WIN % · ALL ROUNDS</small>
+            </div>
+          </div>
         </section>
 
         <section class="panel side-panel">
@@ -124,6 +139,54 @@
       <span>THE MODEL LEARNS AS YOU PLAY.</span>
     </footer>
 
+    <div
+      v-if="instructionsOpen"
+      class="instructions-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="instructions-title"
+      @click.self="instructionsOpen = false"
+      @keydown.escape="instructionsOpen = false"
+    >
+      <section class="instructions-modal">
+        <div class="instructions-head">
+          <div>
+            <small>ROSHAMBO / GAME GUIDE</small>
+            <h2 id="instructions-title">HOW TO PLAY</h2>
+          </div>
+          <button
+            class="instructions-close mono"
+            type="button"
+            aria-label="Close instructions"
+            @click="instructionsOpen = false"
+          >
+            ×
+          </button>
+        </div>
+
+        <p>Select one of the five moves. N.E.M.O. analyzes and counters your play after a short delay.</p>
+
+        <div class="rules-grid">
+          <div><strong>ROCK ✊</strong><span>beats Scissors, Lizard</span></div>
+          <div><strong>PAPER ✋</strong><span>beats Rock, Spock</span></div>
+          <div><strong>SCISSORS ✌️</strong><span>beats Paper, Lizard</span></div>
+          <div><strong>LIZARD 🦎</strong><span>beats Paper, Spock</span></div>
+          <div><strong>SPOCK 🖖</strong><span>beats Rock, Scissors</span></div>
+        </div>
+
+        <div class="instructions-stats">
+          <p><strong>Winning:</strong> Choose a move that beats N.E.M.O.'s move.</p>
+          <p><strong>Drawing:</strong> Matching moves are draws.</p>
+          <p><strong>Total Games:</strong> Wins, losses, and draws combined.</p>
+          <p><strong>Win %:</strong> Wins divided by total games. Draws count in the denominator.</p>
+        </div>
+
+        <button class="instructions-start mono" type="button" @click="instructionsOpen = false">
+          START PLAYING
+        </button>
+      </section>
+    </div>
+
     <div v-if="toast" class="toast">{{ toast }}</div>
   </div>
 </template>
@@ -147,14 +210,20 @@ export default {
       wins: 0,
       losses: 0,
       draws: 0,
+      totalGames: 0,
       round: 1,
       history: [],
       playerHistory: [],
       toast: '',
       toastTimer: null,
+      instructionsOpen: false,
     }
   },
   computed: {
+    winPercentage() {
+      if (this.totalGames === 0) return 0
+      return Math.round((this.wins / this.totalGames) * 100)
+    },
     recentMoves() {
       return this.playerHistory.slice(-5).reverse()
     },
@@ -239,6 +308,7 @@ export default {
         if (result === 'win') this.wins++
         else if (result === 'lose') this.losses++
         else this.draws++
+        this.totalGames++
 
         this.outcome = result
         this.resultText = result === 'win'
@@ -271,6 +341,7 @@ export default {
       this.wins = 0
       this.losses = 0
       this.draws = 0
+      this.totalGames = 0
       this.round = 1
       this.history = []
       this.playerHistory = []
